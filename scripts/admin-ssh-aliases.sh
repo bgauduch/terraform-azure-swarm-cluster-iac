@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # retrieve arguments & echo values
-MANAGERS_FQDN_LIST=$1
-WORKER_FQDN_LIST=$2
+MANAGERS_IP_LIST=$1
+WORKER_IP_LIST=$2
 ENV=$3
 
-echo Managers FQDN list: $MANAGERS_FQDN_LIST
-echo Worker FQDN list: $WORKER_FQDN_LIST
+echo Managers IP list: $MANAGERS_IP_LIST
+echo Worker IP list: $WORKER_IP_LIST
 echo environment: $ENV
 
 # constants
-PATH_TO_MANAGER_PRIVATE_KEY=/home/azureuser/.ssh/authorized_keys
+PATH_TO_MANAGER_PRIVATE_KEY="/home/azureuser/.ssh/azure-test-rsa"
 PATH_TO_WORKER_PRIVATE_KEY=$PATH_TO_MANAGER_PRIVATE_KEY
 BASH_ALIAS_FILE_PATH=~/.bash_aliases
 SSH_ALIAS_PREFIX_MANAGER=man
@@ -19,25 +19,30 @@ SSH_ALIAS_PREFIX_WORKER=wkr
 # create bash aliases files
 touch $BASH_ALIAS_FILE_PATH
 
+# function to append ssh aliases to bash aliases
+function add_ssh_aliase {
+    local alias_name=$1
+    local ip_address=$2
+    alias="alias $alias_name='ssh azureuser@$ip_address\ -i $PATH_TO_MANAGER_PRIVATE_KEY'"
+    echo $alias >> ~/.bash_aliases
+}
+
 # build & add manager aliases
-for i in "${MANAGERS_FQDN_LIST[@]}"
+iter=0
+for i in "${MANAGERS_IP_LIST[@]}"
 do
-    echo "$i"
-    alias_name="$ENV_$SSH_ALIAS_PREFIX_MANAGER_$i"
-    add_ssh_aliase $alias_name $WORKER_FQDN_LIST[$i]
+    alias_name="$ENV-$SSH_ALIAS_PREFIX_MANAGER-$iter"
+    echo "current manager alias: $alias_name"
+    add_ssh_aliase $alias_name $i
+    ((ITER++))
 done
 
 # build & add worker aliases
-for i in "${WORKER_FQDN_LIST[@]}"
+iter=0
+for i in "${WORKER_IP_LIST[@]}"
 do
-    echo "$i"
-    alias_name="$ENV_$SSH_ALIAS_PREFIX_WORKER_$i"
-    add_ssh_aliase $alias_name $WORKER_FQDN_LIST[$i]
+    alias_name="$ENV-$SSH_ALIAS_PREFIX_WORKER-$iter"
+    echo "current worker alias: $alias_name"
+    add_ssh_aliase $alias_name $i
+    ((ITER++))
 done
-
-
-function add_ssh_aliase() {
-    alias_name=$1
-    fqdn_address=$2
-    echo "alias $alias_name= \'ssh azureuser@fqdn_address\'" >> ~/.bash_aliases
-}

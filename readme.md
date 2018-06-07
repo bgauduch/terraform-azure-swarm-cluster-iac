@@ -15,17 +15,17 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation
 
 ## Roadmap ##
-- [] Add SSH aliases to admin VM
-- [] Remove public IP (managers / worker) => all command on managers / worker must pass trought admin vm
-- [] Use separated ssh keys for admin / managers / workers
-- [] setup the Swarm cluster on top of the VM cluster
-- [] Setup the VM using cloud-init (?)
-- [] Add a keyvault to store ssh key, password, etc
-- [] Refine NSG rules for subnets (extract rules from NSG, values as variables ?)
-- [] Build aportable (dockerized) work environment
-- [] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
-- [] Use a clear directory structure for modules
-- [] Add a remote Terraform backend (state sharing) to work as a team
+- [ ] Add SSH aliases to admin VM
+- [ ] Remove public IP (managers / worker) => all command on managers / worker must pass trought admin vm
+- [ ] Use separated ssh keys for admin / managers / workers
+- [ ] setup the Swarm cluster on top of the VM cluster
+- [ ] Setup the VM using cloud-init (?)
+- [ ] Add a keyvault to store ssh key, password, etc
+- [ ] Refine NSG rules for subnets (extract rules from NSG, values as variables ?)
+- [ ] Build aportable (dockerized) work environment
+- [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
+- [ ] Use a clear directory structure for modules
+- [ ] Add a remote Terraform backend (state sharing) to work as a team
 - [X] Add an admin VM (separated subnet & NSG)
 - [X] variabilize the infrastructure deployment (number of machines, sizes, etc)
 - [X] Swarm cluster infrastructure deployment (manager + worker + all the storage / network stack)

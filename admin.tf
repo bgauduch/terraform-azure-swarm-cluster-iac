@@ -47,7 +47,7 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
     user        = "azureuser"
     timeout     = "30s"
     private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
-    host        = "${azurerm_public_ip.tf-manager-public-ip.*.ip_address[count.index]}"
+    host        = "${azurerm_public_ip.tf-admin-public-ip.ip_address}"
   }
 
   provisioner "file" {
@@ -55,16 +55,15 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
     destination = "/tmp/admin-ssh-aliases.sh"
   }
 
+  provisioner "file" {
+    source      = "ssh/azure-test-rsa"
+    destination = "/home/azureuser/.ssh/azure-test-rsa"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /tmp/admin-ssh-aliases.sh",
-      <<EOF
-      "/tmp/admin-ssh-aliases.sh 
-      ${join(",",azurerm_network_interface.tf-manager-nic.*.internal_fqdn)} 
-      ${join(",",azurerm_network_interface.tf-worker-nic.*.internal_fqdn)} 
-      ${var.env}"
-      EOF
-      ,
+      "/tmp/admin-ssh-aliases.sh ${join(",",azurerm_network_interface.tf-manager-nic.*.private_ip_address)} ${join(",",azurerm_network_interface.tf-worker-nic.*.private_ip_address)} ${var.env}",
     ]
   }
 }
