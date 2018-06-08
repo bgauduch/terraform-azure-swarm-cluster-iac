@@ -43,27 +43,4 @@ resource "azurerm_virtual_machine" "tf-manager-vm" {
   tags {
     environment = "${var.env}"
   }
-
-  # the default connection config for provisioners
-  connection {
-    type        = "ssh"
-    user        = "azureuser"
-    timeout     = "30s"
-    private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
-    host        = "${azurerm_public_ip.tf-manager-public-ip.*.ip_address[count.index]}"
-  }
-
-  # send vm initialisation script
-  provisioner "file" {
-    source      = "scripts/docker-install.sh"
-    destination = "/tmp/docker-install.sh"
-  }
-
-  # run scripts
-  provisioner "remote-exec" {
-    inline = [
-      "sudo chmod +x /tmp/docker-install.sh",
-      "/tmp/docker-install.sh",
-    ]
-  }
 }

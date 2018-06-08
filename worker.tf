@@ -48,76 +48,48 @@ resource "azurerm_virtual_machine" "tf-worker-vm" {
     }
   }
 
+  tags {
+    environment = "${var.env}"
+  }
+
   # the default connection config for provisioners
   connection {
     type        = "ssh"
     user        = "azureuser"
     private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
-    host        = "${azurerm_public_ip.tf-worker-public-ip.*.ip_address[count.index]}"
+    host        = "${azurerm_public_ip.tf-admin-public-ip.ip_address}"
   }
 
-  # setup VM
-  provisioner "file" {
-    source      = "scripts/docker-install.sh"
-    destination = "/tmp/docker-install.sh"
-  }
-
-  # provisioner "file" {
-  #   source      = "scripts/worker-init.sh"
-  #   destination = "/tmp/worker-init.sh"
-  # }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo chmod +x /tmp/docker-install.sh",
-      "/tmp/docker-install.sh",
-    ]
-  }
-  # drain worker on destroy event (from manager)
+  /*  # drain worker on destroy event (from admin -> manager)
   provisioner "remote-exec" {
     when = "destroy"
 
     inline = [
-      "docker node update --availability drain ${self.name}",
+      "${var.env}-man-0 'docker node update --availability drain ${self.name}'",
     ]
 
     on_failure = "continue"
-
-    connection {
-      type        = "ssh"
-      user        = "azureuser"
-      private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
-      host        = "${azurerm_public_ip.tf-manager-public-ip.0.ip_address}"
-    }
   }
-  # leave swarm on destroy event
+
+  # leave swarm on destroy event (from admin -> worker)
   provisioner "remote-exec" {
     when = "destroy"
 
     inline = [
-      "docker swarm leave",
+      "${var.env}-wkr-${count.index} 'docker swarm leave'",
     ]
 
     on_failure = "continue"
   }
-  # remove node on destroy event (from manager)
+
+  # remove node on destroy event (from admin -> manager)
   provisioner "remote-exec" {
     when = "destroy"
 
     inline = [
-      "docker node rm --force ${self.name}",
+      "${var.env}-man-0 'docker node rm --force ${self.name}'",
     ]
 
     on_failure = "continue"
-
-    connection {
-      type        = "ssh"
-      user        = "azureuser"
-      private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
-      host        = "${azurerm_public_ip.tf-worker-public-ip.*.ip_address[count.index]}"
-    }
-  }
-  tags {
-    environment = "${var.env}"
-  }
+  } */
 }

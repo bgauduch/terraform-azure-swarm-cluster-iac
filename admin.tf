@@ -9,6 +9,8 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
 
   delete_os_disk_on_termination = true
 
+  depends_on = ["azurerm_virtual_machine.tf-manager-vm", "azurerm_virtual_machine.tf-worker-vm"]
+
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
@@ -58,6 +60,11 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
   provisioner "file" {
     source      = "ssh/azure-test-rsa"
     destination = "/home/azureuser/.ssh/azure-test-rsa"
+  }
+
+  provisioner "file" {
+    source      = "scripts/docker-install.sh"
+    destination = "/tmp/docker-install.sh"
   }
 
   provisioner "remote-exec" {

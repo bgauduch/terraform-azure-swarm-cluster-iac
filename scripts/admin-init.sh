@@ -18,34 +18,40 @@ BASH_ALIAS_FILE_PATH=~/.bash_aliases
 SSH_ALIAS_PREFIX_MANAGER=man
 SSH_ALIAS_PREFIX_WORKER=wkr
 
+# update rights on ssh key
+sudo chmod 600 $PATH_TO_MANAGER_PRIVATE_KEY
+
 # make sure bash_aliases file exist
 touch $BASH_ALIAS_FILE_PATH
 
-# function to append ssh aliases to bash aliases
-function add_ssh_aliase {
-    local alias_name=$1
-    local ip_address=$2
-    alias="alias ${alias_name}='ssh -i $PATH_TO_MANAGER_PRIVATE_KEY ${USER_NAME}@${ip_address}\'"
-    echo $alias >> ~/.bash_aliases
-}
-
-# build & add manager aliases
+# add manager aliases and install docker on manager VMs
 iter=0
 for i in "${MANAGERS_IP_LIST[@]}"
 do
+    # build & save the current manager vm alias
     alias_name="${ENV}-${SSH_ALIAS_PREFIX_MANAGER}-${iter}"
-    add_ssh_aliase $alias_name $i
+    ssh_args="-i $PATH_TO_MANAGER_PRIVATE_KEY ${USER_NAME}@${i}"
+    alias="alias ${alias_name}='ssh ${ssh_args}'"
+    echo $alias >> ~/.bash_aliases
+
+    # send docker install script to current manager VM & execute it
+    scp -oStrictHostKeyChecking=no -i $PATH_TO_MANAGER_PRIVATE_KEY /tmp/docker-install.sh ${USER_NAME}@${i}:/tmp/docker-install.sh
+    ssh -oStrictHostKeyChecking=no $ssh_args 'chmod +x /tmp/docker-install.sh && /tmp/docker-install.sh'
     ((ITER++))
 done
 
-# build & add worker aliases
+# add worker aliases & install dokcer on worker VMs
 iter=0
 for i in "${WORKER_IP_LIST[@]}"
 do
+    # build & save the current worker vm alias
     alias_name="${ENV}-${SSH_ALIAS_PREFIX_WORKER}-${iter}"
-    add_ssh_aliase $alias_name $i
+    ssh_args="-i $PATH_TO_WORKER_PRIVATE_KEY ${USER_NAME}@${i}"
+    alias="alias ${alias_name}='ssh ${ssh_args}'"
+    echo $alias >> ~/.bash_aliases
+
+    # send docker install script to current worker VM & execute it
+    scp -oStrictHostKeyChecking=no -i $PATH_TO_WORKER_PRIVATE_KEY /tmp/docker-install.sh ${USER_NAME}@${i}:/tmp/docker-install.sh
+    ssh -oStrictHostKeyChecking=no $ssh_args 'chmod +x /tmp/docker-install.sh && /tmp/docker-install.sh'
     ((ITER++))
 done
-
-# update rights on ssh key
-sudo chmod 600 $PATH_TO_MANAGER_PRIVATE_KEY

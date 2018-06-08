@@ -28,7 +28,6 @@ resource "azurerm_network_interface" "tf-manager-nic" {
     name                          = "manager-nic-ip-config-${count.index}"
     subnet_id                     = "${azurerm_subnet.tf-managers-subnet.id}"
     private_ip_address_allocation = "dynamic"
-    public_ip_address_id          = "${azurerm_public_ip.tf-manager-public-ip.*.id[count.index]}"
   }
 }
 
@@ -46,6 +45,5 @@ resource "azurerm_network_interface" "tf-worker-nic" {
     name                          = "worker-nic-ip-config-${count.index}"
     subnet_id                     = "${azurerm_subnet.tf-workers-subnet.id}"
     private_ip_address_allocation = "dynamic"
-    public_ip_address_id          = "${azurerm_public_ip.tf-worker-public-ip.*.id[count.index]}"
   }
 }

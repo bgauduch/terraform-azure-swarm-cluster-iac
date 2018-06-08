@@ -15,16 +15,18 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] Remove public IP + associated NSG rules (managers / worker) => all command on managers / worker must pass trought admin vm
+- [ ] Apply VM init on managers / worker trought admin vm
 - [ ] Use separated ssh keys for admin / managers / workers
+- [ ] Setup staic ip for swarm nodes
 - [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Setup the VM using cloud-init (?)
 - [ ] Add a keyvault to store ssh key, password, etc
-- [ ] Refine NSG rules for subnets (extract rules from NSG, values as variables ?)
+- [ ] Refine NSG rules of subnets (Capgemini IP . VPN IP, docker swarm ports, close all by default) 
 - [ ] Build aportable (dockerized) work environment
 - [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
 - [ ] Use a clear directory structure for modules
 - [ ] Add a remote Terraform backend (state sharing) to work as a team
+- [X] Remove public IP + associated NSG rules (managers / worker) => 
 - [X] Add SSH aliases to admin VM
 - [X] Add an admin VM (separated subnet & NSG)
 - [X] variabilize the infrastructure deployment (number of machines, sizes, etc)
