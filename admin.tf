@@ -51,8 +51,8 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
   }
 
   provisioner "file" {
-    source      = "scripts/admin-ssh-aliases.sh"
-    destination = "/tmp/admin-ssh-aliases.sh"
+    source      = "scripts/admin-init.sh"
+    destination = "/tmp/admin-init.sh"
   }
 
   provisioner "file" {
@@ -62,8 +62,8 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo chmod +x /tmp/admin-ssh-aliases.sh",
-      "/tmp/admin-ssh-aliases.sh ${join(",",azurerm_network_interface.tf-manager-nic.*.private_ip_address)} ${join(",",azurerm_network_interface.tf-worker-nic.*.private_ip_address)} ${var.env}",
+      "sudo chmod +x /tmp/admin-init.sh",
+      "/tmp/admin-init.sh ${join(",",azurerm_network_interface.tf-manager-nic.*.private_ip_address)} ${join(",",azurerm_network_interface.tf-worker-nic.*.private_ip_address)} ${var.env} ${var.userName}",
     ]
   }
 }

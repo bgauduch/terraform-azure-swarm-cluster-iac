@@ -12,11 +12,10 @@
     * apply your changes: `terraform apply`
     * destroy deployed resources: `terraform destroy`
         * it is possible to specify a specific resource with the `-target RESOURCE_ADDDRESS` option, carefull with dependancies !
-    * tips : the `-auto-approve` flag can be used to bypass user validation
+    * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] Add SSH aliases to admin VM
-- [ ] Remove public IP (managers / worker) => all command on managers / worker must pass trought admin vm
+- [ ] Remove public IP + associated NSG rules (managers / worker) => all command on managers / worker must pass trought admin vm
 - [ ] Use separated ssh keys for admin / managers / workers
 - [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Setup the VM using cloud-init (?)
@@ -26,6 +25,7 @@
 - [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
 - [ ] Use a clear directory structure for modules
 - [ ] Add a remote Terraform backend (state sharing) to work as a team
+- [X] Add SSH aliases to admin VM
 - [X] Add an admin VM (separated subnet & NSG)
 - [X] variabilize the infrastructure deployment (number of machines, sizes, etc)
 - [X] Swarm cluster infrastructure deployment (manager + worker + all the storage / network stack)

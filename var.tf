@@ -52,6 +52,12 @@ variable "workerDataDiskType" {
 * VM
 **/
 
+variable "userName" {
+  description = "The username on all the VMs"
+  type        = "string"
+  default     = "azureuser"
+}
+
 variable "adminVmSize" {
   description = "The managers Vm Size"
   type        = "string"
