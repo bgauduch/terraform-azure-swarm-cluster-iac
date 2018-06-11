@@ -15,17 +15,21 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] Apply VM init on managers / worker trought admin vm
+- [ ] Rename "docker-install" to "vm-init"
+- [ ] Don't wait for ssh command to end (ex : docker install)
 - [ ] Use separated ssh keys for admin / managers / workers
+- [ ] Extract OS disk from VM declaration
 - [ ] Setup staic ip for swarm nodes
+- [ ] Use a custom OS image preinstalled with docker ?
 - [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Setup the VM using cloud-init (?)
 - [ ] Add a keyvault to store ssh key, password, etc
 - [ ] Refine NSG rules of subnets (Capgemini IP . VPN IP, docker swarm ports, close all by default) 
-- [ ] Build aportable (dockerized) work environment
+- [ ] Build a portable (dockerized) work environment
 - [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
 - [ ] Use a clear directory structure for modules
 - [ ] Add a remote Terraform backend (state sharing) to work as a team
+- [X] Apply VM docker install on managers / worker trought admin vm
 - [X] Remove public IP + associated NSG rules (managers / worker) => 
 - [X] Add SSH aliases to admin VM
 - [X] Add an admin VM (separated subnet & NSG)

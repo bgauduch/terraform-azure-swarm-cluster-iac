@@ -29,7 +29,7 @@ variable "numberOfManagers" {
 variable "numberOfWorkers" {
   description = "The number of manager of the swarm cluster"
   type        = "string"
-  default     = "1"
+  default     = "3"
 }
 
 /**

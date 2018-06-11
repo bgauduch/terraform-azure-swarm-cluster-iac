@@ -10,4 +10,4 @@ sudo apt-get install -y -qq --no-install-recommends curl
 curl -fsSL get.docker.com | sh
 
 # add user to docker group
-sudo usermod -aG docker azureuser
+sudo usermod -aG docker $USER
