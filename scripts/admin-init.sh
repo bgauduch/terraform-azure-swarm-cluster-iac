@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# retrieve arguments & echo values
+# retrieve arguments
 MANAGERS_IP_LIST_STRING=$1
 WORKER_IP_LIST_STRING=$2
 ENV=$3
@@ -10,8 +10,9 @@ USER_NAME=$4
 IFS=',' read -ra MANAGERS_IP_LIST <<< "$MANAGERS_IP_LIST_STRING"
 IFS=',' read -ra WORKER_IP_LIST <<< "$WORKER_IP_LIST_STRING"
 
-echo Managers IP list: $MANAGERS_IP_LIST
-echo Worker IP list: $WORKER_IP_LIST
+# display script values
+echo Managers IP list: "${MANAGERS_IP_LIST[*]}"
+echo Worker IP list: "${WORKER_IP_LIST[*]}"
 echo environment: $ENV
 echo user name: $USER_NAME
 
@@ -41,10 +42,11 @@ do
     # send docker install script to current manager VM & execute it
     scp -oStrictHostKeyChecking=no -i $PATH_TO_MANAGER_PRIVATE_KEY /tmp/docker-install.sh ${USER_NAME}@${i}:/tmp/docker-install.sh
     ssh -oStrictHostKeyChecking=no $ssh_args 'chmod +x /tmp/docker-install.sh && /tmp/docker-install.sh'
+
     ((iter++))
 done
 
-# add worker aliases & install dokcer on worker VMs
+# add worker aliases & install docker on worker VMs
 iter=1
 for i in "${WORKER_IP_LIST[@]}"
 do
@@ -57,5 +59,6 @@ do
     # send docker install script to current worker VM & execute it
     scp -oStrictHostKeyChecking=no -i $PATH_TO_WORKER_PRIVATE_KEY /tmp/docker-install.sh ${USER_NAME}@${i}:/tmp/docker-install.sh
     ssh -oStrictHostKeyChecking=no $ssh_args 'chmod +x /tmp/docker-install.sh && /tmp/docker-install.sh'
+
     ((iter++))
 done

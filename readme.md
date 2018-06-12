@@ -15,6 +15,7 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
+- [ ] Refine NSG rules of subnets (Capgemini IP . VPN IP, docker swarm ports, close all by default) 
 - [ ] Rename "docker-install" to "vm-init"
 - [ ] Don't wait for ssh command to end (ex : docker install)
 - [ ] Use separated ssh keys for admin / managers / workers
@@ -24,9 +25,9 @@
 - [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Setup the VM using cloud-init (?)
 - [ ] Add a keyvault to store ssh key, password, etc
-- [ ] Refine NSG rules of subnets (Capgemini IP . VPN IP, docker swarm ports, close all by default) 
 - [ ] Build a portable (dockerized) work environment
 - [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
+- [ ] module hosting ?
 - [ ] Use a clear directory structure for modules
 - [ ] Add a remote Terraform backend (state sharing) to work as a team
 - [X] Apply VM docker install on managers / worker trought admin vm
@@ -43,9 +44,9 @@ Full documentation : https://www.terraform.io/docs/index.html
 
 * resource configuration: https://www.terraform.io/docs/configuration/resources.html
 * interpolation: https://www.terraform.io/docs/configuration/interpolation.html
+    * Build-in functions: https://www.terraform.io/docs/configuration/interpolation.html#supported-built-in-functions
 * variables: https://www.terraform.io/docs/configuration/variables.html
 * resources addressing: https://www.terraform.io/docs/internals/resource-addressing.html
-* Build-in functions: https://www.terraform.io/docs/configuration/interpolation.html#supported-built-in-functions
 * graph: https://www.terraform.io/docs/commands/graph.html
 * external datasource: https://www.terraform.io/docs/providers/external/data_source.html
 * modules: https://www.terraform.io/docs/modules/index.html

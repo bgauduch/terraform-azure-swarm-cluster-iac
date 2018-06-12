@@ -36,14 +36,14 @@ resource "azurerm_virtual_machine" "tf-worker-vm" {
 
   os_profile {
     computer_name  = "worker-${count.index}"
-    admin_username = "azureuser"
+    admin_username = "${var.userName}"
   }
 
   os_profile_linux_config {
     disable_password_authentication = true
 
     ssh_keys {
-      path     = "/home/azureuser/.ssh/authorized_keys"
+      path     = "/home/${var.userName}/.ssh/authorized_keys"
       key_data = "${file("${path.module}/ssh/azure-test-rsa.pub")}"
     }
   }
@@ -55,7 +55,7 @@ resource "azurerm_virtual_machine" "tf-worker-vm" {
   # the default connection config for provisioners
   connection {
     type        = "ssh"
-    user        = "azureuser"
+    user        = "${var.userName}"
     private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
     host        = "${azurerm_public_ip.tf-admin-public-ip.ip_address}"
   }

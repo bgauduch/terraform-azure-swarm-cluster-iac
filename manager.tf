@@ -28,14 +28,14 @@ resource "azurerm_virtual_machine" "tf-manager-vm" {
 
   os_profile {
     computer_name  = "manager-${count.index}"
-    admin_username = "azureuser"
+    admin_username = "${var.userName}"
   }
 
   os_profile_linux_config {
     disable_password_authentication = true
 
     ssh_keys {
-      path     = "/home/azureuser/.ssh/authorized_keys"
+      path     = "/home/${var.userName}/.ssh/authorized_keys"
       key_data = "${file("${path.module}/ssh/azure-test-rsa.pub")}"
     }
   }
