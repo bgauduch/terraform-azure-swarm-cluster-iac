@@ -10,3 +10,4 @@
 
 # SSH keys
 /ssh/*
+!/ssh/readme.md

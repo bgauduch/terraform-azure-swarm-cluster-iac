@@ -1,5 +1,10 @@
 # Setup a swarm cluster on Azure IaaS using Terraform #
 
+## Prerequisite ##
+* Azure CLI & Terraform installed
+* Azure subscription available
+* ssh key pair in the /ssh folder
+
 ## Usage ##
 * login to your azure subscription: `az login`
 * Initialize terraform (fetch needed plugins & providers): `terraform init`
