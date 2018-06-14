@@ -20,21 +20,21 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] Align resources ID naming (ex : manager-0 with alias man-1, to correct)
-- [ ] Use separated ssh keys for admin / managers / workers
-- [ ] Configure Docker daemon to use data disk when available
-- [ ] Extract OS disk from VM declaration
-- [ ] Setup static ip for swarm nodes & add variable for VNET / subnet masks (?)
-- [ ] Use a custom OS image preinstalled with docker (?)
-- [ ] Setup the VM using cloud-init (?)
-- [ ] setup the Swarm cluster on top of the VM cluster
-- [ ] Add a keyvault to store ssh key, password, etc
-- [ ] Add a backup Recovery Vault 
-- [ ] Build a portable (dockerized) work environment
-- [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
-- [ ] module hosting on github (?)
-- [ ] Use a clear directory structure for modules
-- [ ] Add a remote Terraform backend (state sharing) to work as a team
+- [ ] FIX - Find a way to execute vm-init script when vm are re-created (IE : after a modification, scripts played from admin VM are not played again)
+- [ ] FEATURE - Use separated ssh keys for admin / managers / workers
+- [ ] FEATURE - Configure Docker daemon to use data disk when available
+- [ ] FEATURE - Extract OS disk from VM declaration
+- [ ] FEATURE - Add a keyvault to store ssh keys
+- [ ] FEATURE - Add a backup Recovery Vault
+- [ ] FEATURE - setup the Swarm cluster on top of the VM cluster
+- [ ] UPDATE - Use a custom OS image preinstalled with docker (?)
+- [ ] UPDATE - Setup the VM using cloud-init (?)
+- [ ] FEATURE - Setup a module / modules (with input var and ouput) with a clear folder structure to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
+- [ ] UPDATE - module hosting on github (?)
+- [ ] UPDATE - Add a remote Terraform backend (state sharing) to work as a team
+- [X] Align resources ID naming (ex : manager-0 with alias man-1, to correct)
+- [X] Setup static ip for swarm nodes & add variable for VNET / subnet masks (?)
+- [X] extract vnet / subnet mask in var
 - [X] Refine NSG rules of subnets (SSH on amdin public IP, close inbound by default, allow ssh between admin and managers / workers, open swarm ports between managers / workers)
 - [X] Don't wait for ssh command to end (ex : docker install)
 - [X] Rename "docker-install" to "vm-init"

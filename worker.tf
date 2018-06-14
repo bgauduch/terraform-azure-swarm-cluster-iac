@@ -35,7 +35,7 @@ resource "azurerm_virtual_machine" "tf-worker-vm" {
   }
 
   os_profile {
-    computer_name  = "worker-${count.index}"
+    computer_name  = "worker-${count.index + 1}"
     admin_username = "${var.userName}"
   }
 

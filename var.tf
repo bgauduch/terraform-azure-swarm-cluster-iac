@@ -36,6 +36,30 @@ variable "numberOfWorkers" {
 * NETWORK
 **/
 
+variable "vnetRange" {
+  description = "THe IP range for the VNET"
+  type        = "string"
+  default     = "10.0.0.0/16"
+}
+
+variable "adminSubnetRange" {
+  description = "The ip range for the admin subnet"
+  type        = "string"
+  default     = "10.0.0.0/24"
+}
+
+variable "managerSubnetRange" {
+  description = "The ip range for the manager subnet"
+  type        = "string"
+  default     = "10.0.1.0/24"
+}
+
+variable "workerSubnetRange" {
+  description = "The ip range for the worker subnet"
+  type        = "string"
+  default     = "10.0.2.0/24"
+}
+
 variable "adminPublicIpFqdnName" {
   description = "The FQDN to use on admin public IP"
   type        = "string"
