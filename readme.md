@@ -20,21 +20,22 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] Refine NSG rules of subnets (Capgemini IP / VPN IP: OK, docker swarm ports: TODO, close all by default: TODO)
-- [ ] Add a backup Recovery Vault 
 - [ ] Align resources ID naming (ex : manager-0 with alias man-1, to correct)
 - [ ] Use separated ssh keys for admin / managers / workers
+- [ ] Configure Docker daemon to use data disk when available
 - [ ] Extract OS disk from VM declaration
-- [ ] Setup static ip for swarm nodes
+- [ ] Setup static ip for swarm nodes & add variable for VNET / subnet masks (?)
 - [ ] Use a custom OS image preinstalled with docker (?)
-- [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Setup the VM using cloud-init (?)
+- [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Add a keyvault to store ssh key, password, etc
+- [ ] Add a backup Recovery Vault 
 - [ ] Build a portable (dockerized) work environment
 - [ ] Setup a module / modules (with input var and ouput) to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
 - [ ] module hosting on github (?)
 - [ ] Use a clear directory structure for modules
 - [ ] Add a remote Terraform backend (state sharing) to work as a team
+- [X] Refine NSG rules of subnets (SSH on amdin public IP, close inbound by default, allow ssh between admin and managers / workers, open swarm ports between managers / workers)
 - [X] Don't wait for ssh command to end (ex : docker install)
 - [X] Rename "docker-install" to "vm-init"
 - [X] Apply VM docker install on managers / worker trought admin vm
@@ -65,11 +66,15 @@ Full documentation : https://www.terraform.io/docs/index.html
 * build a swarm cluster on Digital Ocean with TF: https://knpw.rs/blog/docker-swarm-terraform/
 
 ### Azure ###
-* list available VM images by region: https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage
 * Linux general purpose VM sizes: https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general
+* list available VM images by region: https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage
+* List VM sizes available for an availability set: https://docs.microsoft.com/en-us/cli/azure/vm/availability-set?view=azure-cli-latest#az-vm-availability-set-list-sizes
 
 ### Unix ###
 * add ssh aliases: https://scotch.io/tutorials/how-to-create-an-ssh-shortcut
+
+### Docker ###
+* Firewall configuration for Swarm: https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-ubuntu-16-04
 
 ### blogs ###
 * Gruntwork post series :

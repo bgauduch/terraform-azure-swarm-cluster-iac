@@ -29,7 +29,7 @@ variable "numberOfManagers" {
 variable "numberOfWorkers" {
   description = "The number of manager of the swarm cluster"
   type        = "string"
-  default     = "3"
+  default     = "1"
 }
 
 /**
@@ -71,13 +71,13 @@ variable "userName" {
 variable "adminVmSize" {
   description = "The managers Vm Size"
   type        = "string"
-  default     = "Standard_A1_v2"
+  default     = "Standard_B1ms"
 }
 
 variable "managerVmSize" {
   description = "The managers Vm Size"
   type        = "string"
-  default     = "Standard_A1_v2"       # change to "Standard_DS1_v2" or more for real workload
+  default     = "Standard_B1ms"        # change to "Standard_DS1_v2" or more for real workload
 }
 
 variable "workerVmSize" {
