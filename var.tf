@@ -33,6 +33,16 @@ variable "numberOfWorkers" {
 }
 
 /**
+* NETWORK
+**/
+
+variable "adminPublicIpFqdnName" {
+  description = "The FQDN to use on admin public IP"
+  type        = "string"
+  default     = "azure-terraform-swarm-cluster-admin-pubic-ip-bga"
+}
+
+/**
 * STORAGE
 **/
 

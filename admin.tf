@@ -63,8 +63,8 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
   }
 
   provisioner "file" {
-    source      = "scripts/docker-install.sh"
-    destination = "/tmp/docker-install.sh"
+    source      = "scripts/vm-init.sh"
+    destination = "/tmp/vm-init.sh"
   }
 
   provisioner "remote-exec" {

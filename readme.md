@@ -20,13 +20,12 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
- -[ ] Align resources ID naming -ex : manager-0 with alias man-1, to correct)
-- [ ] Refine NSG rules of subnets (Capgemini IP . VPN IP, docker swarm ports, close all by default) 
-- [ ] Rename "docker-install" to "vm-init"
-- [ ] Don't wait for ssh command to end (ex : docker install)
+- [ ] Refine NSG rules of subnets (Capgemini IP / VPN IP: OK, docker swarm ports: TODO, close all by default: TODO)
+- [ ] Add a backup Recovery Vault 
+- [ ] Align resources ID naming (ex : manager-0 with alias man-1, to correct)
 - [ ] Use separated ssh keys for admin / managers / workers
 - [ ] Extract OS disk from VM declaration
-- [ ] Setup staic ip for swarm nodes
+- [ ] Setup static ip for swarm nodes
 - [ ] Use a custom OS image preinstalled with docker (?)
 - [ ] setup the Swarm cluster on top of the VM cluster
 - [ ] Setup the VM using cloud-init (?)
@@ -36,6 +35,8 @@
 - [ ] module hosting on github (?)
 - [ ] Use a clear directory structure for modules
 - [ ] Add a remote Terraform backend (state sharing) to work as a team
+- [X] Don't wait for ssh command to end (ex : docker install)
+- [X] Rename "docker-install" to "vm-init"
 - [X] Apply VM docker install on managers / worker trought admin vm
 - [X] Remove public IP + associated NSG rules (managers / worker) => 
 - [X] Add SSH aliases to admin VM

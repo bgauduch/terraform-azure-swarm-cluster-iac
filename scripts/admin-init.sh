@@ -39,9 +39,9 @@ do
     alias="alias ${alias_name}='ssh ${ssh_args}'"
     echo $alias >> ~/.bash_aliases
 
-    # send docker install script to current manager VM & execute it
-    scp -oStrictHostKeyChecking=no -i $PATH_TO_MANAGER_PRIVATE_KEY /tmp/docker-install.sh ${USER_NAME}@${i}:/tmp/docker-install.sh
-    ssh -oStrictHostKeyChecking=no $ssh_args 'chmod +x /tmp/docker-install.sh && /tmp/docker-install.sh'
+    # send vm init script to current manager VM & execute it
+    scp -oStrictHostKeyChecking=no -i $PATH_TO_MANAGER_PRIVATE_KEY /tmp/vm-init.sh ${USER_NAME}@${i}:/tmp/vm-init.sh
+    ssh -oStrictHostKeyChecking=no $ssh_args "nohup sh -c 'chmod +x /tmp/vm-init.sh && /tmp/vm-init.sh' > /tmp/vm-init.log 2>&1 &"
 
     ((iter++))
 done
@@ -56,9 +56,9 @@ do
     alias="alias ${alias_name}='ssh ${ssh_args}'"
     echo $alias >> ~/.bash_aliases
 
-    # send docker install script to current worker VM & execute it
-    scp -oStrictHostKeyChecking=no -i $PATH_TO_WORKER_PRIVATE_KEY /tmp/docker-install.sh ${USER_NAME}@${i}:/tmp/docker-install.sh
-    ssh -oStrictHostKeyChecking=no $ssh_args 'chmod +x /tmp/docker-install.sh && /tmp/docker-install.sh'
+    # send vm init script to current worker VM & execute it
+    scp -oStrictHostKeyChecking=no -i $PATH_TO_WORKER_PRIVATE_KEY /tmp/vm-init.sh ${USER_NAME}@${i}:/tmp/vm-init.sh
+    ssh -oStrictHostKeyChecking=no $ssh_args "nohup sh -c 'chmod +x /tmp/vm-init.sh && /tmp/vm-init.sh' > /tmp/vm-init.log 2>&1 &"
 
     ((iter++))
 done
