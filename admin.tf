@@ -14,7 +14,7 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    sku       = "${var.ubuntuVersion}"
     version   = "latest"
   }
 

@@ -21,9 +21,11 @@
 
 ## Roadmap ##
 - [ ] FIX - Find a way to execute vm-init script when vm are re-created (IE : after a modification, scripts played from admin VM are not played again)
+- [ ] FEATURE - calcultate subnet range using cidrsubnet() terraform function
 - [ ] FEATURE - Use separated ssh keys for admin / managers / workers
 - [ ] FEATURE - Configure Docker daemon to use data disk when available
 - [ ] FEATURE - Extract OS disk from VM declaration
+- [ ] FEATURE - Add a storage acount
 - [ ] FEATURE - Add a keyvault to store ssh keys
 - [ ] FEATURE - Add a backup Recovery Vault
 - [ ] FEATURE - setup the Swarm cluster on top of the VM cluster
