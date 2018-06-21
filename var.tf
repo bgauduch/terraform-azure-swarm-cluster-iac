@@ -67,11 +67,23 @@ variable "adminPublicIpFqdnName" {
 }
 
 /**
-* STORAGE
+* WORKER DISKS
 **/
 
+variable "workerOsDiskType" {
+  description = "The worker OS disk type"
+  type        = "string"
+  default     = "Premium_LRS"             # Standard_LRS, Premium_LRS
+}
+
+variable "workerOsDiskSize" {
+  description = "The worker OS disk size"
+  type        = "string"
+  default     = "2048"                    # min: 32 - max:4095 
+}
+
 variable "workerDataDiskSize" {
-  description = "available disk size"
+  description = "Worker data disk size"
   type        = "string"
   default     = "32"
 }
@@ -82,6 +94,9 @@ variable "workerDataDiskType" {
   default     = "Standard_LRS"
 }
 
+/**
+* STORAGE
+**/
 variable "storageAccountName" {
   description = "The storage account name, some limitations apply : lowercase letters and number, 3 to 24 charaters long"
   type        = "string"
@@ -131,5 +146,5 @@ variable "managerVmSize" {
 variable "workerVmSize" {
   description = "The workers Vm Size"
   type        = "string"
-  default     = "Standard_A1_v2"      # change to "Standard_DS1_v2" or more for real workload
+  default     = "Standard_A1_v2"      # change to "Standard_DS1_v2" /  or more for real workload
 }

@@ -23,7 +23,8 @@ resource "azurerm_virtual_machine" "tf-worker-vm" {
     name              = "worker-vm-os-disk-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+    managed_disk_type = "${var.workerOsDiskType}"
+    disk_size_gb      = "${var.workerOsDiskSize}"
   }
 
   storage_data_disk {
