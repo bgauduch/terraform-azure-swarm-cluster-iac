@@ -16,12 +16,14 @@
     * plan your deployment: `terraform plan`
         * it possible to plan for other action, like destroy: `terraform plan -destroy`
     * apply your changes: `terraform apply`
+        * Optionnaly, override variables to suit your needs:
+            * create a file named `config.tfvars` in the project directory and override variables as you wish
+            * deploye your setup: `terraform apply -var-file="config.tfvars"`
     * destroy deployed resources: `terraform destroy`
         * it is possible to specify a specific resource with the `-target RESOURCE_ADDDRESS` option, carefull with dependancies !
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] FEATURE - Add a .tfvar exemple for setup
 - [ ] COMPONENT - Add an Application Gateway as a module (with it's set of rules, certs, etc)
 - [ ] FIX - Find a way to execute vm-init script when vm are re-created (IE : after a modification, scripts played from admin VM are not played again)
 - [ ] FEATURE - Use separated ssh keys for admin / managers / workers
@@ -36,6 +38,7 @@
 - [ ] FEATURE - Setup a module / modules (with input var and ouput) with a clear folder structure to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
 - [ ] UPDATE - module hosting on github
 - [ ] UPDATE - Add a remote Terraform backend (state sharing) to work as a team
+- [X] FEATURE - Add a .tfvar exemple for setup
 - [X] FEATURE - calcultate subnet range using cidrsubnet() terraform function & correct CIDR subnet mask
 - [X] FEATURE - Add a storage acount
 - [X] Align resources ID naming (ex : manager-0 with alias man-1, to correct)
