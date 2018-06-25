@@ -7,7 +7,7 @@ resource "azurerm_subnet" "tf-admin-subnet" {
   virtual_network_name      = "${azurerm_virtual_network.tf-swarm-cluster-vnet.name}"
   network_security_group_id = "${azurerm_network_security_group.tf-admin-subnet-nsg.id}"
 
-  address_prefix = "${var.adminSubnetRange}"
+  address_prefix = "${cidrsubnet(var.vnetRange, 8, 1)}"
 }
 
 resource "azurerm_subnet" "tf-managers-subnet" {
@@ -16,7 +16,7 @@ resource "azurerm_subnet" "tf-managers-subnet" {
   virtual_network_name      = "${azurerm_virtual_network.tf-swarm-cluster-vnet.name}"
   network_security_group_id = "${azurerm_network_security_group.tf-manager-subnet-nsg.id}"
 
-  address_prefix = "${var.managerSubnetRange}"
+  address_prefix = "${cidrsubnet(var.vnetRange, 8, 2)}"
 }
 
 resource "azurerm_subnet" "tf-workers-subnet" {
@@ -25,5 +25,5 @@ resource "azurerm_subnet" "tf-workers-subnet" {
   virtual_network_name      = "${azurerm_virtual_network.tf-swarm-cluster-vnet.name}"
   network_security_group_id = "${azurerm_network_security_group.tf-worker-subnet-nsg.id}"
 
-  address_prefix = "${var.workerSubnetRange}"
+  address_prefix = "${cidrsubnet(var.vnetRange, 8, 3)}"
 }

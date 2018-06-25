@@ -28,7 +28,7 @@ resource "azurerm_network_interface" "tf-manager-nic" {
     name                          = "manager-nic-ip-config-${count.index}"
     subnet_id                     = "${azurerm_subnet.tf-managers-subnet.id}"
     private_ip_address_allocation = "static"
-    private_ip_address            = "${cidrhost(var.managerSubnetRange, count.index + 10)}" # add 10, because subnets have reserved IPs at the begining of the range
+    private_ip_address            = "${cidrhost(azurerm_subnet.tf-managers-subnet.address_prefix, count.index + 10)}" # add 10, because subnets have reserved IPs at the begining of the range
   }
 }
 
@@ -46,6 +46,6 @@ resource "azurerm_network_interface" "tf-worker-nic" {
     name                          = "worker-nic-ip-config-${count.index}"
     subnet_id                     = "${azurerm_subnet.tf-workers-subnet.id}"
     private_ip_address_allocation = "static"
-    private_ip_address            = "${cidrhost(var.workerSubnetRange, count.index + 10 )}" # add 10, because subnets have reserved IPs at the begining of the range
+    private_ip_address            = "${cidrhost(azurerm_subnet.tf-workers-subnet.address_prefix, count.index + 10 )}" # add 10, because subnets have reserved IPs at the begining of the range
   }
 }

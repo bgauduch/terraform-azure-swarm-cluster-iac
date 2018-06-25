@@ -7,7 +7,8 @@
 
 ## Usage ##
 * login to your azure subscription: `az login`
-* Initialize terraform (fetch needed plugins & providers): `terraform init`
+* Initialize terraform (fetch needed modules & providers): `terraform init`
+    * the `-upgrade` flag will check for upgrade on already installed modules / plugins
 * Use terraform: 
     * load required modules: `terraform get`
     * graph your resources: `terraform graph`
@@ -20,20 +21,23 @@
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
+- [ ] FEATURE - Add a .tfvar exemple for setup
+- [ ] COMPONENT - Add an Application Gateway as a module (with it's set of rules, certs, etc)
 - [ ] FIX - Find a way to execute vm-init script when vm are re-created (IE : after a modification, scripts played from admin VM are not played again)
-- [ ] FEATURE - calcultate subnet range using cidrsubnet() terraform function
 - [ ] FEATURE - Use separated ssh keys for admin / managers / workers
+- [ ] COMPONENT - Add a keyvault to store ssh keys
+- [ ] COMPONENT - Add a backup Recovery Vault
 - [ ] FEATURE - Configure Docker daemon to use data disk when available
-- [ ] FEATURE - Extract OS disk from VM declaration
-- [ ] FEATURE - Add a storage acount
-- [ ] FEATURE - Add a keyvault to store ssh keys
-- [ ] FEATURE - Add a backup Recovery Vault
 - [ ] FEATURE - setup the Swarm cluster on top of the VM cluster
+- [ ] FEATURE - on worker VM: automate NFS configuration  /OR/ automate cloudstor installation for docker swarm
 - [ ] UPDATE - Use a custom OS image preinstalled with docker (?)
 - [ ] UPDATE - Setup the VM using cloud-init (?)
+- [ ] UPDATE - change terraform ressources naming using underscores "_" instead of dash "-", and simplify ressources name to avoid long references when using interpolation
 - [ ] FEATURE - Setup a module / modules (with input var and ouput) with a clear folder structure to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
-- [ ] UPDATE - module hosting on github (?)
+- [ ] UPDATE - module hosting on github
 - [ ] UPDATE - Add a remote Terraform backend (state sharing) to work as a team
+- [X] FEATURE - calcultate subnet range using cidrsubnet() terraform function & correct CIDR subnet mask
+- [X] FEATURE - Add a storage acount
 - [X] Align resources ID naming (ex : manager-0 with alias man-1, to correct)
 - [X] Setup static ip for swarm nodes & add variable for VNET / subnet masks (?)
 - [X] extract vnet / subnet mask in var
@@ -70,7 +74,7 @@ Full documentation : https://www.terraform.io/docs/index.html
 ### Azure ###
 * Linux general purpose VM sizes: https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general
 * list available VM images by region: https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage
-* List VM sizes available for an availability set: https://docs.microsoft.com/en-us/cli/azure/vm/availability-set?view=azure-cli-latest#az-vm-availability-set-list-sizes
+* List VM tiers available for an availability set: https://docs.microsoft.com/en-us/cli/azure/vm/availability-set?view=azure-cli-latest#az-vm-availability-set-list-sizes
 
 ### Unix ###
 * add ssh aliases: https://scotch.io/tutorials/how-to-create-an-ssh-shortcut

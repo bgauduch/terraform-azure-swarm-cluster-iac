@@ -1,7 +1,6 @@
 /**
 * GLOBAL
 **/
-
 variable "env" {
   description = "the environment"
   type        = "string"
@@ -35,63 +34,16 @@ variable "numberOfWorkers" {
 /**
 * NETWORK
 **/
-
 variable "vnetRange" {
-  description = "THe IP range for the VNET"
+  description = "The ip range for the VNET"
   type        = "string"
   default     = "10.0.0.0/16"
-}
-
-variable "adminSubnetRange" {
-  description = "The ip range for the admin subnet"
-  type        = "string"
-  default     = "10.0.0.0/24"                       //"${cidrsubnet(var.vnetRange, 8, 1)}"
-}
-
-variable "managerSubnetRange" {
-  description = "The ip range for the manager subnet"
-  type        = "string"
-  default     = "10.0.1.0/24"
-}
-
-variable "workerSubnetRange" {
-  description = "The ip range for the worker subnet"
-  type        = "string"
-  default     = "10.0.2.0/24"
 }
 
 variable "adminPublicIpFqdnName" {
   description = "The FQDN to use on admin public IP"
   type        = "string"
   default     = "azure-terraform-swarm-cluster-admin-pubic-ip-bga"
-}
-
-/**
-* WORKER DISKS
-**/
-
-variable "workerOsDiskType" {
-  description = "The worker OS disk type"
-  type        = "string"
-  default     = "Premium_LRS"             # Standard_LRS, Premium_LRS
-}
-
-variable "workerOsDiskSize" {
-  description = "The worker OS disk size"
-  type        = "string"
-  default     = "2048"                    # min: 32 - max:4095 
-}
-
-variable "workerDataDiskSize" {
-  description = "Worker data disk size"
-  type        = "string"
-  default     = "32"
-}
-
-variable "workerDataDiskType" {
-  description = "managers data disk type"
-  type        = "string"
-  default     = "Standard_LRS"
 }
 
 /**
@@ -106,7 +58,7 @@ variable "storageAccountName" {
 variable "storageAccountTier" {
   description = "The cluster storage account tier"
   type        = "string"
-  default     = "Standard"
+  default     = "Standard"                         # Standard (File, Blob, Queue), Premium (Blob only)
 }
 
 variable "storageAccountReplication" {
@@ -140,11 +92,39 @@ variable "adminVmSize" {
 variable "managerVmSize" {
   description = "The managers Vm Size"
   type        = "string"
-  default     = "Standard_A1_v2"       # change to "Standard_DS1_v2" or more for real workload
+  default     = "Standard_A1_v2"
 }
 
 variable "workerVmSize" {
   description = "The workers Vm Size"
   type        = "string"
-  default     = "Standard_A1_v2"      # change to "Standard_DS1_v2" /  or more for real workload
+  default     = "Standard_A1_v2"      # change to "Standard_D2_v3" / Standard_D4s_v3 or more for real workload
+}
+
+/**
+* WORKER DISKS
+**/
+
+variable "workerOsDiskType" {
+  description = "The worker OS disk type"
+  type        = "string"
+  default     = "Standard_LRS"            # Standard_LRS, Premium_LRS (some VM tiers like Standard_A1 do not support Premium)
+}
+
+variable "workerOsDiskSize" {
+  description = "The worker OS disk size"
+  type        = "string"
+  default     = "32"                      # min: 32 - max:4095 
+}
+
+variable "workerDataDiskSize" {
+  description = "Worker data disk size"
+  type        = "string"
+  default     = "32"
+}
+
+variable "workerDataDiskType" {
+  description = "managers data disk type"
+  type        = "string"
+  default     = "Standard_LRS"            # Standard_LRS, Premium_LRS
 }
