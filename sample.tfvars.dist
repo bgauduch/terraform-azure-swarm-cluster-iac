@@ -1,0 +1,29 @@
+### Overide with custom values, and inject in terraform apply command using the "-var-file=foo.tfvars" switch
+
+env = "TODO"
+
+resourceGroupName = "TODO"
+
+numberOfManagers = "TODO"
+
+numberOfWorkers = "TODO"
+
+adminPublicIpFqdnName = "TODO"
+
+storageAccountName = "TODO"
+
+workerVmSize = "TODO"
+
+workerOsDiskSize = "TODO"
+
+workerDataDiskSize = "TODO"
+
+workerDataDiskType = "TODO"
+
+agSku = "TODO"
+
+agTier = "TODO""
+
+agInstanceCount = "TODO"
+
+agPublicIpFqdnName = "TODO"

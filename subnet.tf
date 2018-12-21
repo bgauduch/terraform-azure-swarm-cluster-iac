@@ -27,3 +27,12 @@ resource "azurerm_subnet" "tf-workers-subnet" {
 
   address_prefix = "${cidrsubnet(var.vnetRange, 8, 3)}"
 }
+
+resource "azurerm_subnet" "tf_ag_subnet" {
+  name                      = "ag-subnet"
+  resource_group_name       = "${azurerm_resource_group.tf-swarm-cluster-resourcegroup.name}"
+  virtual_network_name      = "${azurerm_virtual_network.tf-swarm-cluster-vnet.name}"
+  network_security_group_id = "${azurerm_network_security_group.tf_ag_subnet_nsg.id}"
+
+  address_prefix = "${cidrsubnet(var.vnetRange, 8, 4)}"
+}

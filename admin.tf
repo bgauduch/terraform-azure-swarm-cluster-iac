@@ -35,7 +35,7 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
 
     ssh_keys {
       path     = "/home/${var.userName}/.ssh/authorized_keys"
-      key_data = "${file("${path.module}/ssh/azure-test-rsa.pub")}"
+      key_data = "${file("${path.module}/ssh/admin-rsa.pub")}"
     }
   }
 
@@ -48,20 +48,29 @@ resource "azurerm_virtual_machine" "tf-admin-vm" {
     type        = "ssh"
     user        = "${var.userName}"
     timeout     = "60s"
-    private_key = "${file("${path.module}/ssh/azure-test-rsa")}"
+    private_key = "${file("${path.module}/ssh/admin-rsa")}"
     host        = "${azurerm_public_ip.tf-admin-public-ip.ip_address}"
   }
 
+  # send the manager SSH key
+  provisioner "file" {
+    source      = "ssh/manager-rsa"
+    destination = "/home/${var.userName}/.ssh/manager-rsa"
+  }
+
+  # send the worker SSH key
+  provisioner "file" {
+    source      = "ssh/worker-rsa"
+    destination = "/home/${var.userName}/.ssh/worker-rsa"
+  }
+
+  # send the admin init script
   provisioner "file" {
     source      = "scripts/admin-init.sh"
     destination = "/tmp/admin-init.sh"
   }
 
-  provisioner "file" {
-    source      = "ssh/azure-test-rsa"
-    destination = "/home/${var.userName}/.ssh/azure-test-rsa"
-  }
-
+  # Send the cluster nodes init script
   provisioner "file" {
     source      = "scripts/vm-init.sh"
     destination = "/tmp/vm-init.sh"

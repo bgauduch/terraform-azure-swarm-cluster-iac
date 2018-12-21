@@ -67,3 +67,17 @@ resource "azurerm_network_security_rule" "tf-worker-nsg-rule-inbound-cluster-ove
   resource_group_name         = "${azurerm_resource_group.tf-swarm-cluster-resourcegroup.name}"
   network_security_group_name = "${azurerm_network_security_group.tf-worker-subnet-nsg.name}"
 }
+
+resource "azurerm_network_security_rule" "tf-worker-nsg-rule-inbound-http-from-ag" {
+  name                        = "worker-nsg-rule-inbound-http-from-ag"
+  priority                    = 300
+  access                      = "Allow"
+  direction                   = "Inbound"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "${azurerm_subnet.tf_ag_subnet.address_prefix}"
+  destination_address_prefix  = "${azurerm_subnet.tf-workers-subnet.address_prefix}"
+  resource_group_name         = "${azurerm_resource_group.tf-swarm-cluster-resourcegroup.name}"
+  network_security_group_name = "${azurerm_network_security_group.tf-worker-subnet-nsg.name}"
+}

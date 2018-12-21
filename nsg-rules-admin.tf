@@ -26,7 +26,7 @@ resource "azurerm_network_security_rule" "tf-admin-nsg-rule-inbound-ssh-cap-offi
   network_security_group_name = "${azurerm_network_security_group.tf-admin-subnet-nsg.name}"
 }
 
-resource "azurerm_network_security_rule" "tf-admin-nsg-rule--inboundssh-cap-vpn" {
+resource "azurerm_network_security_rule" "tf-admin-nsg-rule-inbound-ssh-cap-vpn" {
   name                        = "admin-nsg-rule-inbound-ssh-cap-vpn"
   priority                    = 110
   access                      = "Allow"

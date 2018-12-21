@@ -3,10 +3,11 @@
 ## Prerequisite ##
 * Azure CLI & Terraform installed
 * Azure subscription available
-* ssh key pair in the /ssh folder
+* ssh key pair in the /ssh folder (can be initialized using `ssh-key-init.sh` script in `dev-tools` folder)
 
 ## Usage ##
 * login to your azure subscription: `az login`
+    * switch to the desired subscription with Azure CLI : `az account set -s SUBSCRIPTION_NAME`
 * Initialize terraform (fetch needed modules & providers): `terraform init`
     * the `-upgrade` flag will check for upgrade on already installed modules / plugins
 * Use terraform: 
@@ -17,27 +18,35 @@
         * it possible to plan for other action, like destroy: `terraform plan -destroy`
     * apply your changes: `terraform apply`
         * Optionnaly, override variables to suit your needs:
-            * create a file named `config.tfvars` in the project directory and override variables as you wish
-            * deploye your setup: `terraform apply -var-file="config.tfvars"`
+            * create a file named `configs.tfvars` in the project directory and override variables as you wish
+            * deploy your setup: `terraform apply -var-file="configs.tfvars"`
     * destroy deployed resources: `terraform destroy`
-        * it is possible to specify a specific resource with the `-target RESOURCE_ADDDRESS` option, carefull with dependancies !
+        * it is possible to specify a specific resource with the `-target RESOURCE_ADDDRESS` option, be carefull with dependancies !
     * tips : the `-auto-approve` flag can be used to bypass user validation on any terraform command
 
 ## Roadmap ##
-- [ ] COMPONENT - Add an Application Gateway as a module (with it's set of rules, certs, etc)
-- [ ] FIX - Find a way to execute vm-init script when vm are re-created (IE : after a modification, scripts played from admin VM are not played again)
-- [ ] FEATURE - Use separated ssh keys for admin / managers / workers
+- [ ] FIX - Find a way to execute vm-init script when vm are re-created (PB: after a modification, scripts played from admin VM are not played again)
+- [ ] FIX - fix the traffic manager endpoint creation failure 
+- [ ] FIX - fix issue preventing addition of manager to the swarm (NSG issue ? check docker daemon log)
+- [ ] FEATURE - Add a firewall rule on MySQL service, allowing only swarm workers to connect
+- [ ] FEATURE - Extract the AG in a module
 - [ ] COMPONENT - Add a keyvault to store ssh keys
 - [ ] COMPONENT - Add a backup Recovery Vault
-- [ ] FEATURE - Configure Docker daemon to use data disk when available
-- [ ] FEATURE - setup the Swarm cluster on top of the VM cluster
-- [ ] FEATURE - on worker VM: automate NFS configuration  /OR/ automate cloudstor installation for docker swarm
+- [ ] FEATURE - Add nodes ID address in all nodes hosts (to enable usage of SSH Aliases)
+- [ ] FEATURE - Setup the NFS mount on cluster creation  /OR/ automate cloudstor installation for docker swarm (on worker VM)
+- [ ] FEATURE - Setup the Swarm cluster on top of the VM cluster
+- [ ] UPDATE - Setup SSH aliases using ssh config (add ssh host .ssh/config, and then use shortnames in bash_aliases)
 - [ ] UPDATE - Use a custom OS image preinstalled with docker (?)
 - [ ] UPDATE - Setup the VM using cloud-init (?)
 - [ ] UPDATE - change terraform ressources naming using underscores "_" instead of dash "-", and simplify ressources name to avoid long references when using interpolation
 - [ ] FEATURE - Setup a module / modules (with input var and ouput) with a clear folder structure to have a reusable swarm cluster build (maybe setup low level modules like VM+NIC, vnet+subnet+nsg+rules, etc ?)
 - [ ] UPDATE - module hosting on github
 - [ ] UPDATE - Add a remote Terraform backend (state sharing) to work as a team
+- [X] COMPONENT - Add an Application Gateway (with it's set of rules, certs, etc)
+- [X] COMPONENT - Add a Traffic Manager
+- [X] COMPONENT - Add a Redis managed service
+- [X] COMPONENT - Add a MySQL managed service
+- [X] FEATURE - Use separated ssh keys for admin / managers / workers
 - [X] FEATURE - Add a .tfvar exemple for setup
 - [X] FEATURE - calcultate subnet range using cidrsubnet() terraform function & correct CIDR subnet mask
 - [X] FEATURE - Add a storage acount

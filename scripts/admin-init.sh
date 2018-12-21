@@ -17,14 +17,15 @@ echo environment: $ENV
 echo user name: $USER_NAME
 
 # constants
-PATH_TO_MANAGER_PRIVATE_KEY="/home/${USER_NAME}/.ssh/azure-test-rsa"
-PATH_TO_WORKER_PRIVATE_KEY=$PATH_TO_MANAGER_PRIVATE_KEY
+PATH_TO_MANAGER_PRIVATE_KEY="/home/${USER_NAME}/.ssh/manager-rsa"
+PATH_TO_WORKER_PRIVATE_KEY="/home/${USER_NAME}/.ssh/worker-rsa"
 BASH_ALIAS_FILE_PATH=~/.bash_aliases
 SSH_ALIAS_PREFIX_MANAGER=man
 SSH_ALIAS_PREFIX_WORKER=wkr
 
 # update rights on ssh key
 sudo chmod 600 $PATH_TO_MANAGER_PRIVATE_KEY
+sudo chmod 600 $PATH_TO_WORKER_PRIVATE_KEY
 
 # make sure bash_aliases file exist
 touch $BASH_ALIAS_FILE_PATH

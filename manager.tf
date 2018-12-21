@@ -6,7 +6,7 @@ resource "azurerm_virtual_machine" "tf-manager-vm" {
   resource_group_name = "${azurerm_resource_group.tf-swarm-cluster-resourcegroup.name}"
 
   network_interface_ids = ["${azurerm_network_interface.tf-manager-nic.*.id[count.index]}"]
-  availability_set_id   = "${azurerm_availability_set.tf-cluster-availability-set.id}"
+  availability_set_id   = "${azurerm_availability_set.tf-managers-availability-set.id}"
 
   vm_size = "${var.managerVmSize}"
 
@@ -36,7 +36,7 @@ resource "azurerm_virtual_machine" "tf-manager-vm" {
 
     ssh_keys {
       path     = "/home/${var.userName}/.ssh/authorized_keys"
-      key_data = "${file("${path.module}/ssh/azure-test-rsa.pub")}"
+      key_data = "${file("${path.module}/ssh/manager-rsa.pub")}"
     }
   }
 

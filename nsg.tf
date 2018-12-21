@@ -27,3 +27,13 @@ resource "azurerm_network_security_group" "tf-worker-subnet-nsg" {
     environment = "${var.env}"
   }
 }
+
+resource "azurerm_network_security_group" "tf_ag_subnet_nsg" {
+  name                = "ag-subnet-nsg"
+  location            = "${azurerm_resource_group.tf_ag_resourcegroup.location}"
+  resource_group_name = "${azurerm_resource_group.tf_ag_resourcegroup.name}"
+
+  tags {
+    environment = "${var.env}"
+  }
+}
