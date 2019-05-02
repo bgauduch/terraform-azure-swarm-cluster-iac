@@ -1,3 +1,9 @@
+![Maintenance](https://img.shields.io/maintenance/no/2019.svg?style=flat-square)
+# Disclaimer
+This repo might contain valuable Terraform on Azure examples, but is **NOT** the way to go for a Swarm cluster creation as of today.
+
+You should instead consider using Ansible in conjonction with Terraform for instance.
+
 # Setup a swarm cluster on Azure IaaS using Terraform #
 
 ## Prerequisite ##
